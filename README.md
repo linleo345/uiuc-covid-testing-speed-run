@@ -3,6 +3,9 @@
 testing: 
 
     run from project root directory
+	
+	npm install	
+
     
         chmod +x scripts/server-test.sh
         
