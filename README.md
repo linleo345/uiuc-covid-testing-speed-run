@@ -2,8 +2,8 @@
 
 testing: 
 
-    run
+    run from project root directory
     
         chmod +x scripts/server-test.sh
         
-        ./scripts/server-test.sh from project root directory
+        ./scripts/server-test.sh
