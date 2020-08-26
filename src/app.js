@@ -2,9 +2,43 @@ var express = require('express');
 var fs = require('fs')
 var app = express();
 var https = require('https')
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var multer = require('multer');
+var creds = require('./mongo-creds.js');
+
+mongoose.connect(creds.creds);
+
+var Item = new Schema({
+	img: {
+		data: Buffer,
+		contentType: String
+	}
+})
+var Item = mongoose.model('Speed Run Time', Item);
+
+app.use(multer({ dest: './uploads/',
+	rename: function (fieldname, filename) {
+		return filename;
+	},
+}).single("image"));
+
+app.post('/upload', function(req, res) {
+	//console.log(req.file)
+	
+	var newItem = new Item();
+	newItem.img.data = fs.readFileSync(req.file.path)
+	newItem.img.contentType = 'image/png';
+	newItem.save();
+	
+});
 
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
+});
+
+app.get('/upload', function(req, res) {
+	res.sendFile(__dirname + '/client/upload.html');
 });
 
 console.log('Server Launched');
