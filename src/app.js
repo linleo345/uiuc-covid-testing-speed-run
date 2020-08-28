@@ -13,9 +13,15 @@ var Item = new Schema({
 	img: {
 		data: Buffer,
 		contentType: String
+	},
+	record: {
+		name: String,
+		category: String,
+		time: String
+
 	}
 })
-var Item = mongoose.model('Speed Run Time', Item);
+var Item = mongoose.model('speed_run_recordings', Item);
 
 app.use(multer({ dest: './uploads/',
 	rename: function (fieldname, filename) {
@@ -23,13 +29,25 @@ app.use(multer({ dest: './uploads/',
 	},
 }).single("image"));
 
+
 app.post('/upload', function(req, res) {
-	//console.log(req.file)
+	//console.log(req)
 	
 	var newItem = new Item();
-	newItem.img.data = fs.readFileSync(req.file.path)
+	newItem.img.data = fs.readFileSync(req.file.path);
 	newItem.img.contentType = 'image/png';
+
+	newItem.record.category = 'any%';
+	newItem.record.name = 'Leo';
+	newItem.record.time = req.body.time;
+
 	newItem.save();
+
+	console.log("file sent");
+	fs.unlinkSync(req.file.path);
+
+
+	res.send('OK');
 	
 });
 
