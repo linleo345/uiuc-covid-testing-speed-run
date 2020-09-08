@@ -1,3 +1,5 @@
 node_modules
 */mongo-creds.js
 uploads/*
+src/server/*.cert
+src/server/*.key

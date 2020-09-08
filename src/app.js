@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var multer = require('multer');
 var creds = require('./mongo-creds.js');
 
-mongoose.connect(creds.creds);
+mongoose.connect(creds.creds, { useNewUrlParser: true });
 
 var Item = new Schema({
 	img: {
@@ -38,7 +38,7 @@ app.post('/upload', function(req, res) {
 	newItem.img.contentType = 'image/png';
 
 	newItem.record.category = 'any%';
-	newItem.record.name = 'Leo';
+	newItem.record.name = req.body.name;
 	newItem.record.time = req.body.time;
 
 	newItem.save();
@@ -57,6 +57,30 @@ app.get('/', function(req, res) {
 
 app.get('/upload', function(req, res) {
 	res.sendFile(__dirname + '/client/upload.html');
+});
+
+app.get('/leaderboard', function(req, res) {
+	const leaderboard = new Item();
+
+	var callback = (err) => {
+		if(err) throw err;
+		console.log('its saved!');
+	}
+
+	Item.find({}, (err, data) => {
+		if(err) {
+			console.log(err);
+		}
+		else {
+			const the_bytes = data[0]['img']['data'];
+			//const uinteightarray = new Uint8Array(Buffer.from(the_bytes));
+			
+			
+			res.send(data[0]['img']['data'], data[1]['img']['data']);
+		}
+
+	});
+
 });
 
 console.log('Server Launched');

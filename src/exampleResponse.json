@@ -1,0 +1,19 @@
+[
+  {
+    img: { data: [Binary], contentType: 'image/png' },
+    _id: 5f49554ada96da359924561e,
+    __v: 0
+  },
+  {
+    img: { data: [Binary], contentType: 'image/png' },
+    record: { category: 'any%', name: 'Leo', time: 'tester' },
+    _id: 5f4956b28e82873713f02f97,
+    __v: 0
+  },
+  {
+    img: { data: [Binary], contentType: 'image/png' },
+    record: { category: 'any%', name: 'Leo', time: 'SUPER FAST TIME' },
+    _id: 5f4956fd8e82873713f02f98,
+    __v: 0
+  }
+]
